@@ -49,8 +49,8 @@ const StudentLogin = () => {
     }));
   };
   return (
-    <div className="flex justify-center items-center h-full mt-10">
-      <div className="main">
+    <div className="flex flex-col justify-center items-center gap-[10px] h-full mt-10">
+      <div className="main ">
         <input type="checkbox" id="chk" aria-hidden="true" />
 
         <div className="login">
@@ -79,6 +79,12 @@ const StudentLogin = () => {
             <button type="submit">Log in</button>
           </form>
         </div>
+      </div>
+      <div>
+        <p>To login</p>
+        <p>use this credentials</p>
+        <p>email:kunal@gmail.com</p>
+        <p>password:4321</p>
       </div>
     </div>
   );
