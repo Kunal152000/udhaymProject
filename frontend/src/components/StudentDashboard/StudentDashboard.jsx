@@ -12,7 +12,10 @@ function StudentDashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/studentProgress/${id}`);
+        const response = await axios.get(
+          `http://localhost:5000/studentProgress/${id}`
+        );
+        console.log(response.data);
         setReportData(response.data.weeklyData);
       } catch (error) {
         console.log(error);
@@ -22,12 +25,18 @@ function StudentDashboard() {
     fetchData();
   }, [id]);
 
+  const pieChartValue = reportData[reportData.length - 1];
+  console.log(pieChartValue);
   const data = {
     labels: ["Loss", "Profit", "Expenses"],
     datasets: [
       {
         label: "Current",
-        data: [300, 50, 1000],
+        data: [
+          pieChartValue.loss,
+          pieChartValue.profit,
+          pieChartValue.moneySpent,
+        ],
         backgroundColor: [
           "rgb(255, 99, 132)",
           "rgb(54, 162, 235)",
@@ -53,7 +62,7 @@ function StudentDashboard() {
 
   return (
     <DashboardTemplateStudent>
-      <h1 className="text-4xl text-center py-10">Progress Report of Student</h1>
+      <h1 className="text-4xl text-center py-10">Complete Progress Report</h1>
       <div className="flex w-full p-10 justify-around items-start ">
         <StudentChart dataset={data} />
         <StudentHistoryChart dataset={historydata} />

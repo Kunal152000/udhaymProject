@@ -6,6 +6,7 @@ import { Doughnut } from "react-chartjs-2";
 function StudentChart({ dataset }) {
   return (
     <div className="min-w-[15rem] w-[400px] h-[400px]">
+      <p>This week Progress Chart</p>
       <Doughnut data={dataset} />
     </div>
   );
