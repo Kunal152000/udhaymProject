@@ -7,7 +7,8 @@ import {
   Row,
   Cell,
 } from "@table-library/react-table-library/table";
-import { FiEdit } from "react-icons/fi";
+import { GrAdd } from "react-icons/gr";
+import { LuEdit } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -31,6 +32,9 @@ const TableTemplate = () => {
         console.log(error);
       });
   };
+  const handleUpdateClick = (id) => {
+    navigate(`/updateStudent/${id}`);
+  };
   const handleClick = (id) => {
     navigate(`/EditProgress/${id}`);
   };
@@ -47,6 +51,7 @@ const TableTemplate = () => {
               <HeaderCell>StudentId</HeaderCell>
               <HeaderCell>StudentName</HeaderCell>
               <HeaderCell>Email</HeaderCell>
+              <HeaderCell>Edit Student Details</HeaderCell>
               <HeaderCell>Add Progress</HeaderCell>
             </HeaderRow>
           </Header>
@@ -57,8 +62,16 @@ const TableTemplate = () => {
                 <Cell>{item.studentId}</Cell>
                 <Cell>{item.studentName}</Cell>
                 <Cell>{item.studentEmail}</Cell>
-                <Cell className="text-center">
-                  <FiEdit
+                <Cell>
+                  <LuEdit
+                    className="cursor-pointer"
+                    onClick={() => {
+                      handleUpdateClick(item.studentId);
+                    }}
+                  />
+                </Cell>
+                <Cell className=" text-center">
+                  <GrAdd
                     className="cursor-pointer"
                     onClick={() => {
                       handleClick(item.studentId);

@@ -6,6 +6,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const studentRegister = require("./Routes/studentRoutes");
 const studentProgress = require("./Routes/progressRoutes");
+const studentLogin = require("./Routes/studentLoginRoute");
 const PORT = 5000;
 
 dotenv.config();
@@ -17,8 +18,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use("/student", studentRegister);
 app.use("/studentProgress", studentProgress);
+app.use("/StudentLogin", studentLogin);
 
-app.get("/", (req, res) => {                     
+app.get("/", (req, res) => {
   res.send("Hello from server");
 });
 

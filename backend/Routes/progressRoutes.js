@@ -1,16 +1,15 @@
-"/progressDetail/:id";
 const express = require("express");
 const {
-  createProgress,
+  createWeekProgress,
   ReadProgress,
-  updateProgress,
+  updateWeekProgress,
 } = require("../controllers/progressControllers");
 const router = express.Router();
 
 router
   .route("/:studentId")
-  .post(createProgress)
+  .post(createWeekProgress)
   .get(ReadProgress)
-  .patch(updateProgress);
+  .patch(updateWeekProgress);
 
 module.exports = router;

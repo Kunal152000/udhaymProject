@@ -1,24 +1,66 @@
 const StudentProgress = require("../Models/progressModel");
-
 const axios = require("axios");
 
-const createProgress = async (req, res) => {
+const createWeekProgress = async (req, res) => {
   try {
-    const studentId = req.params.studentId;
+    const {
+      studentId,
+      weekNumber,
+      moneySpent,
+      moneyEarned,
+      itemSold,
+      loss,
+      profit,
+    } = req.body;
 
-    const response = await axios.get("http://localhost:5000/student/");
-    const matchValue = response.data?.studentData.find(
-      (student) => student.studentId == studentId
-    );
-    if (matchValue) {
-      const progressData = await StudentProgress.create(req.body);
-      res.status(201).json(progressData);
+    const progress = await StudentProgress.findOne({ studentId });
+
+    if (!progress) {
+      // If progress data doesn't exist for the student, create a new document
+      await StudentProgress.create({
+        studentId,
+        weeklyData: [
+          {
+            weekNumber,
+            moneySpent,
+            moneyEarned,
+            itemSold,
+            loss,
+            profit,
+          },
+        ],
+      });
+
+      res.status(201).json({ message: "Week data created successfully" });
     } else {
-      res.status(400).send("Student ID not found, please check");
+      // If progress data exists, update the week data
+      const updatedProgress = await StudentProgress.findOneAndUpdate(
+        { studentId },
+        {
+          $push: {
+            weeklyData: {
+              weekNumber,
+              moneySpent,
+              moneyEarned,
+              itemSold,
+              loss,
+              profit,
+            },
+          },
+        },
+        { new: true }
+      );
+
+      res.status(200).json({
+        message: "Week data updated successfully",
+        progress: updatedProgress,
+      });
     }
   } catch (error) {
-    console.log(error);
-    res.status(500).send("An error occurred", error);
+    console.error(error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while creating/updating week data" });
   }
 };
 
@@ -26,7 +68,7 @@ const ReadProgress = async (req, res) => {
   try {
     const studentId = req.params.studentId;
     console.log(studentId);
-    const progress = await StudentProgress.findById({ _id: studentId });
+    const progress = await StudentProgress.findById(studentId);
     console.log(progress);
     if (progress) {
       res.status(200).json(progress);
@@ -38,18 +80,47 @@ const ReadProgress = async (req, res) => {
     res.status(500).send("An error occurred", error);
   }
 };
-const updateProgress = async (req, res) => {
+const updateWeekProgress = async (req, res) => {
   try {
-    const studentId = req.params.studentId;
-    const studentProgress = await StudentProgress.findByIdAndUpdate(
+    const {
       studentId,
-      req.body
+      weekNumber,
+      moneySpent,
+      moneyEarned,
+      itemSold,
+      loss,
+      profit,
+    } = req.body;
+
+    const updatedProgress = await StudentProgress.findOneAndUpdate(
+      { studentId, "weeklyData.weekNumber": weekNumber },
+      {
+        $set: {
+          "weeklyData.$.moneySpent": moneySpent,
+          "weeklyData.$.moneyEarned": moneyEarned,
+          "weeklyData.$.itemSold": itemSold,
+          "weeklyData.$.loss": loss,
+          "weeklyData.$.profit": profit,
+        },
+      },
+      { new: true }
     );
-    res.status(201).json(studentProgress);
+
+    if (!updatedProgress) {
+      // If progress data or week data not found, return an error
+      return res.status(404).json({ error: "Week data not found" });
+    }
+
+    res.status(200).json({
+      message: "Week data updated successfully",
+      StudentProgress: updatedProgress,
+    });
   } catch (error) {
-    console.log(error);
-    res.status(500).send("An error occurred", error);
+    console.error(error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while updating week data" });
   }
 };
 
-module.exports = { createProgress, ReadProgress, updateProgress };
+module.exports = { createWeekProgress, ReadProgress, updateWeekProgress };

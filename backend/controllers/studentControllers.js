@@ -1,10 +1,10 @@
 const StudentRegister = require("../Models/studentModel");
 
 const Register = async (req, res, next) => {
-  const { studentName, studentEmail, studentId } = req.body;
+  const { studentName, studentEmail, studentId, studentPassword } = req.body;
 
   try {
-    if (!studentName || !studentEmail || !studentId) {
+    if (!studentName || !studentEmail || !studentId || !studentPassword) {
       res.status(400);
       throw new Error("Please fill all the fields");
     }
@@ -32,29 +32,49 @@ const Students = async (req, res) => {
 };
 
 const updateStudents = async (req, res) => {
-  let updateStudent = await StudentRegister.findById(req.params.id);
-  if (!updateStudent) {
-    res.json({ message: "Studentid not correct , or student not found" });
+  try {
+    const studentId = req.params.id;
+    const updateStudent = await StudentRegister.findOneAndUpdate(
+      { studentId },
+      req.body,
+      {
+        new: true,
+      }
+    );
+    res.status(201).json(updateStudent);
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while updating the student" });
   }
-  updateStudent = await StudentRegister.findByIdAndUpdate(
-    req.params.id,
-    req.body,
-    { new: true, useFindAndModify: true, runValidators: true }
-  );
-  res.status(201).json(updateStudent);
 };
+
 const DeleteStudent = async (req, res) => {
-  const delStudent = await StudentRegister.findById(req.params.id);
-  if (!delStudent) {
-    res.json({ message: "Student id not correct , or student not found" });
-  }
-  const result = await StudentRegister.deleteOne({
-    _id: req.params.id,
-  });
-  if (result.deletedCount === 1) {
-    res.status(200).json({ message: "Student deleted successfully" });
-  } else {
-    res.status(404).json({ error: "Document not found" });
+  try {
+    const studentId = req.params.id;
+
+    const delStudent = await StudentRegister.findOne({ studentId });
+    if (!delStudent) {
+      res
+        .status(404)
+        .json({ message: "Student ID not correct or student not found" });
+      return;
+    }
+    const result = await StudentRegister.deleteOne({ studentId });
+    if (result.deletedCount === 1) {
+      res.status(200).json({ message: "Student deleted successfully" });
+    } else {
+      res
+        .status(500)
+        .json({ error: "An error occurred while deleting the student" });
+    }
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while deleting the student" });
   }
 };
+
 module.exports = { Register, Students, updateStudents, DeleteStudent };

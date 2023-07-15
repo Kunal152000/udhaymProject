@@ -1,14 +1,19 @@
 const mongoose = require("mongoose");
 
-const Progress = new mongoose.Schema({
-  studentId: { type: "String", required: true },
-  moneySpentThisWeek: { type: Number },
-  moneyEarnedThisWeek: { type: Number },
-  itemSoldThisWeek: { type: Number },
-  lossThisWeek: { type: Number },
-  profitThisWeek: { type: Number },
+const weekDataSchema = new mongoose.Schema({
+  weekNumber: { type: Number, required: true },
+  moneySpent: { type: Number, required: true },
+  moneyEarned: { type: Number, required: true },
+  itemSold: { type: Number, required: true },
+  loss: { type: Number, required: true },
+  profit: { type: Number, required: true },
 });
 
-const StudentProgress = mongoose.model("StudentProgress", Progress);
+const progressSchema = new mongoose.Schema({
+  studentId: { type: String, required: true },
+  weeklyData: [weekDataSchema],
+});
 
-module.exports = StudentProgress;
+const Progress = mongoose.model("Progress", progressSchema);
+
+module.exports = Progress;

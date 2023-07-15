@@ -3,7 +3,7 @@ const DashboardTemplate = (props) => {
   const navigate = useNavigate();
   return (
     <>
-      <div className="fixed left-0 top-0 w-[18%] p-5 border-white border-r-2 z-20 h-full max-h-[100vh] min-w-[200px] flex-[0.18] bg-gray-600 text-white text-xl">
+      <div className="fixed left-0 top-0 w-[15%] p-5 border-white border-r-2 z-20 h-full max-h-[100vh] min-w-[200px] flex-[0.18] bg-gray-600 text-white text-xl">
         Welcome Teacher
         <div className="mt-[30px] cursor-pointer" onClick={() => navigate("/")}>
           Home

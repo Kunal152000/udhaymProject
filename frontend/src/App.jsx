@@ -4,6 +4,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AddDetail from "./components/AddDetail";
 import StudentLogin from "./components/login/StudentLogin";
 import EditProgress from "./components/EditProgress";
+import UpdateStudent from "./components/UpdateStudent";
+import StudentDashboard from "./components/StudentDashboard/StudentDashboard";
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
         <Route path="/add-details" element={<AddDetail />} />
         <Route path="/studentLogin" element={<StudentLogin />} />
         <Route path="/EditProgress/:id" element={<EditProgress />} />
+        <Route path="/updateStudent/:id" element={<UpdateStudent />} />
+        <Route path="/studentDashboard" element={<StudentDashboard />} />
       </Routes>
     </BrowserRouter>
   );

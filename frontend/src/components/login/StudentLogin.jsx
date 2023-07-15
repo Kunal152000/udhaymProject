@@ -1,12 +1,30 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./login.css";
 const StudentLogin = () => {
+  const navigate = useNavigate();
+  const [login, setLogin] = useState({
+    email: "",
+    password: "",
+  });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    navigate(`/studentDashboard/`);
+  };
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setLogin((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
   return (
     <div className="flex justify-center items-center h-full mt-10">
       <div className="main">
         <input type="checkbox" id="chk" aria-hidden="true" />
 
         <div className="login">
-          <form className="form">
+          <form className="form" onSubmit={handleSubmit}>
             <label htmlFor="chk" aria-hidden="true">
               Log in
             </label>
@@ -14,47 +32,21 @@ const StudentLogin = () => {
               className="input"
               type="email"
               name="email"
+              value={login.email}
               placeholder="Email"
-              required=""
+              onChange={handleInputChange}
+              required="true"
             />
             <input
               className="input"
               type="password"
-              name="pswd"
+              name="password"
+              value={login.password}
               placeholder="Password"
-              required=""
+              onChange={handleInputChange}
+              required="true"
             />
-            <button>Log in</button>
-          </form>
-        </div>
-
-        <div className="register">
-          <form className="form">
-            <label htmlFor="chk" aria-hidden="true">
-              Register
-            </label>
-            <input
-              className="input"
-              type="text"
-              name="txt"
-              placeholder="Username"
-              required=""
-            />
-            <input
-              className="input"
-              type="email"
-              name="email"
-              placeholder="Email"
-              required=""
-            />
-            <input
-              className="input"
-              type="password"
-              name="pswd"
-              placeholder="Password"
-              required=""
-            />
-            <button>Register</button>
+            <button type="submit">Log in</button>
           </form>
         </div>
       </div>

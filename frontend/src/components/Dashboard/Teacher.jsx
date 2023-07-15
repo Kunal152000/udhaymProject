@@ -5,10 +5,8 @@ const Teacher = () => {
   const navigate = useNavigate();
   return (
     <DashboardTemplate>
-      <h1 className=" text-gray-900 text-3xl font-bold mb-5">
-        Teacher Dashboard
-      </h1>
-      <div className="">
+      <h1 className=" text-gray-900 text-3xl font-bold mb-5">Teacher Portal</h1>
+      <div className="mb-5">
         <button className="" onClick={() => navigate("/add-details")}>
           Add Student
         </button>

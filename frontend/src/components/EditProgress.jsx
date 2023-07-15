@@ -10,40 +10,36 @@ const EditProgress = () => {
   const [isDisabled1, setIsDisabled1] = useState();
   const [progress, setProgress] = useState({
     studentId: id,
-    moneySpentThisWeek: "",
-    moneyEarnedThisWeek: "",
-    itemSoldThisWeek: "",
-    lossThisWeek: "",
-    profitThisWeek: "",
+    weekNumber: "",
+    moneySpent: "",
+    moneyEarned: "",
+    itemSold: "",
+    loss: "",
+    profit: "",
   });
-  const [updateProgress, setupdateProgress] = useState({
-    studentId: toString(id),
-    moneySpentThisWeek: "",
-    moneyEarnedThisWeek: "",
-    itemSoldThisWeek: "",
-    lossThisWeek: "",
-    profitThisWeek: "",
-  });
-  const handleUpdateCall = (updateProgress) => {
-    let config = {
-      method: "patch",
-      maxBodyLength: Infinity,
-      url: `http://localhost:5000/studentProgress/${id}`,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: updateProgress,
-    };
+  // const handleUpdateCall = (progress) => {
+  //   let config = {
+  //     method: "patch",
+  //     maxBodyLength: Infinity,
+  //     url: `http://localhost:5000/studentProgress/${id}`,
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     data: progress,
+  //   };
 
-    axios
-      .request(config)
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  //   axios
+  //     .request(config)
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       setIsDisabled(true);
+  //       navigate("/");
+  //       alert("student progress  added");
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
   const handleCall = async (progress) => {
     let config = {
       method: "post",
@@ -59,6 +55,7 @@ const EditProgress = () => {
       .request(config)
       .then((response) => {
         console.log(JSON.stringify(response.data));
+        alert("student progress  added");
         navigate("/");
       })
       .catch((error) => {
@@ -66,17 +63,17 @@ const EditProgress = () => {
         alert("please check the data");
       });
     setIsDisabled(true);
-    setIsDisabled1(!isDisabled);
+    setIsDisabled1(false);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     handleCall(progress);
   };
-  const handleUpdateSubmit = (e) => {
-    e.preventDefault();
-    handleUpdateCall(updateProgress);
-  };
+  // const handleUpdateSubmit = (e) => {
+  //   e.preventDefault();
+  //   handleUpdateCall(progress);
+  // };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -87,7 +84,7 @@ const EditProgress = () => {
   };
   const handleUpdateChange = (e) => {
     const { name, value } = e.target;
-    setupdateProgress((prevState) => ({
+    setProgress((prevState) => ({
       ...prevState,
       [name]: value,
     }));
@@ -99,16 +96,21 @@ const EditProgress = () => {
       </h1>
       <div className="flex gap-10  items-start">
         <div>
+          <h3 className="mb-5 text-xl font-bold text-gray-800">Week</h3>
+          <input
+            required={true}
+            type="text"
+            name="weekNumber"
+            value={progress.weekNumber}
+            onChange={isDisabled ? handleUpdateChange : handleInputChange}
+            className="border-black border-2 mb-5"
+          />
           <h3 className="mb-5 text-xl font-bold text-gray-800">Money Spent</h3>
           <input
             required={true}
             type="text"
-            name="moneySpentThisWeek"
-            value={
-              isDisabled
-                ? updateProgress.moneySpentThisWeek
-                : progress.moneySpentThisWeek
-            }
+            name="moneySpent"
+            value={progress.moneySpent}
             onChange={isDisabled ? handleUpdateChange : handleInputChange}
             className="border-black border-2 mb-5"
           />
@@ -116,38 +118,28 @@ const EditProgress = () => {
           <input
             required={true}
             type="text"
-            name="itemSoldThisWeek"
-            value={
-              isDisabled
-                ? updateProgress.itemSoldThisWeek
-                : progress.itemSoldThisWeek
-            }
-            onChange={isDisabled ? handleUpdateChange : handleInputChange}
-            className="border-black border-2 mb-5"
-          />
-          <h3 className="mb-5 text-xl font-bold text-gray-800">Money Earned</h3>
-          <input
-            required={true}
-            type="text"
-            name="moneyEarnedThisWeek"
-            value={
-              isDisabled
-                ? updateProgress.moneyEarnedThisWeek
-                : progress.moneyEarnedThisWeek
-            }
+            name="itemSold"
+            value={progress.itemSold}
             onChange={isDisabled ? handleUpdateChange : handleInputChange}
             className="border-black border-2 mb-5"
           />
         </div>
         <div>
+          <h3 className="mb-5 text-xl font-bold text-gray-800">Money Earned</h3>
+          <input
+            required={true}
+            type="text"
+            name="moneyEarned"
+            value={progress.moneyEarned}
+            onChange={isDisabled ? handleUpdateChange : handleInputChange}
+            className="border-black border-2 mb-5"
+          />
           <h3 className="mb-5 text-xl font-bold text-gray-800">Loss</h3>
           <input
             required={true}
             type="text"
-            name="lossThisWeek"
-            value={
-              isDisabled ? updateProgress.lossThisWeek : progress.lossThisWeek
-            }
+            name="loss"
+            value={progress.loss}
             onChange={isDisabled ? handleUpdateChange : handleInputChange}
             className="border-black border-2 mb-5"
           />
@@ -155,12 +147,8 @@ const EditProgress = () => {
           <input
             required={true}
             type="text"
-            name="profitThisWeek"
-            value={
-              isDisabled
-                ? updateProgress.profitThisWeek
-                : progress.profitThisWeek
-            }
+            name="profit"
+            value={progress.profit}
             onChange={isDisabled ? handleUpdateChange : handleInputChange}
             className="border-black border-2 mb-5"
           />
@@ -171,13 +159,13 @@ const EditProgress = () => {
           >
             Add
           </button>
-          <button
+          {/* <button
             className="ml-5 bg-black"
             onClick={handleUpdateSubmit}
             disabled={isDisabled1}
           >
             Update
-          </button>
+          </button> */}
         </div>
       </div>
     </DashboardTemplate>
