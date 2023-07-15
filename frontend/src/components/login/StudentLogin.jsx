@@ -1,3 +1,5 @@
+import axios from "axios";
+import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
@@ -7,9 +9,37 @@ const StudentLogin = () => {
     email: "",
     password: "",
   });
+  const [data, setData] = useState();
+  const handleApi = () => {
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: "http://localhost:5000/student/",
+      headers: {},
+    };
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        setData(response.data.studentData);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  useEffect(() => {
+    handleApi();
+  }, []);
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate(`/studentDashboard/`);
+    const findVal = data.find(
+      (student) =>
+        student.studentEmail === login.email &&
+        student.studentPassword === login.password
+    );
+    if (findVal) {
+      navigate(`/studentDashboard/${findVal.studentId}`);
+    }
   };
   const handleInputChange = (e) => {
     const { name, value } = e.target;

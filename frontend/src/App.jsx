@@ -16,7 +16,7 @@ function App() {
         <Route path="/studentLogin" element={<StudentLogin />} />
         <Route path="/EditProgress/:id" element={<EditProgress />} />
         <Route path="/updateStudent/:id" element={<UpdateStudent />} />
-        <Route path="/studentDashboard" element={<StudentDashboard />} />
+        <Route path="/studentDashboard/:id" element={<StudentDashboard />} />
       </Routes>
     </BrowserRouter>
   );

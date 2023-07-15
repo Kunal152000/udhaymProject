@@ -68,8 +68,7 @@ const ReadProgress = async (req, res) => {
   try {
     const studentId = req.params.studentId;
     console.log(studentId);
-    const progress = await StudentProgress.findById(studentId);
-    console.log(progress);
+    const progress = await StudentProgress.findOne({ studentId });
     if (progress) {
       res.status(200).json(progress);
     } else {
