@@ -17,8 +17,10 @@ const handleCall = async (data) => {
     .request(config)
     .then((response) => {
       console.log(JSON.stringify(response.data));
+      alert("Student Added Successfully");
     })
     .catch((error) => {
+      alert("Student Not Added, there might be an error");
       console.log(error);
     });
 };
