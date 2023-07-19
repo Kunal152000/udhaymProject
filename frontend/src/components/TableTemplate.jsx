@@ -7,7 +7,7 @@ import {
   Row,
   Cell,
 } from "@table-library/react-table-library/table";
-import { GrAdd } from "react-icons/gr";
+import { GrAdd, GrView } from "react-icons/gr";
 import { LuEdit } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -38,9 +38,13 @@ const TableTemplate = () => {
   const handleClick = (id) => {
     navigate(`/EditProgress/${id}`);
   };
+  const handleProgressClick = (id) => {
+    navigate(`/progressReport/${id}`);
+  };
   useEffect(() => {
     handleCall();
   }, []);
+  
   const data = { nodes: user };
   return (
     <Table data={data}>
@@ -53,6 +57,7 @@ const TableTemplate = () => {
               <HeaderCell>Email</HeaderCell>
               <HeaderCell>Edit Student Details</HeaderCell>
               <HeaderCell>Add Progress</HeaderCell>
+              <HeaderCell>View Report</HeaderCell>
             </HeaderRow>
           </Header>
 
@@ -75,6 +80,14 @@ const TableTemplate = () => {
                     className="cursor-pointer"
                     onClick={() => {
                       handleClick(item.studentId);
+                    }}
+                  />
+                </Cell>
+                <Cell className=" text-center">
+                  <GrView
+                    className="cursor-pointer"
+                    onClick={() => {
+                      handleProgressClick(item.studentId);
                     }}
                   />
                 </Cell>

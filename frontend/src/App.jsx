@@ -6,6 +6,7 @@ import StudentLogin from "./components/login/StudentLogin";
 import EditProgress from "./components/EditProgress";
 import UpdateStudent from "./components/UpdateStudent";
 import StudentDashboard from "./components/StudentDashboard/StudentDashboard";
+import ProgressReport from "./components/ProgressReport";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/EditProgress/:id" element={<EditProgress />} />
         <Route path="/updateStudent/:id" element={<UpdateStudent />} />
         <Route path="/studentDashboard/:id" element={<StudentDashboard />} />
+        <Route path="/progressReport/:id" element={<ProgressReport />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,12 +1,12 @@
 import { Line } from "react-chartjs-2";
 
-function StudentHistoryChart({ dataset }) {
+function StudentLossChart({ dataset }) {
   return (
     <div className="min-w-[20rem] w-[600px] h-[600px]">
-      <p>All week progress Chart of expenses</p>
+      <p>All week Chart of Loss</p>
       <Line data={dataset} />
     </div>
   );
 }
 
-export default StudentHistoryChart;
+export default StudentLossChart;
