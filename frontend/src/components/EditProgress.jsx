@@ -74,7 +74,7 @@ const EditProgress = () => {
   //   e.preventDefault();
   //   handleUpdateCall(progress);
   // };
-
+  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setProgress((prevState) => ({

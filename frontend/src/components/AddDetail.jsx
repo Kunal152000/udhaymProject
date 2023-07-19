@@ -39,6 +39,15 @@ const AddDetail = () => {
   };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    if (
+      data.studentName.trim() === "" ||
+      data.studentId.trim() === "" ||
+      data.studentEmail.trim() === "" ||
+      data.studentPassword.trim() === ""
+    ) {
+      alert("Please fill in all the fields.");
+      return;
+    }
     setData((prevState) => ({
       ...prevState,
       [name]: value,
@@ -54,7 +63,7 @@ const AddDetail = () => {
         <h3 className="mb-5 text-xl font-bold text-gray-800">Student Name</h3>
         <input
           type="text"
-          required={true}
+          required="true"
           name="studentName"
           value={data.studentName}
           onChange={handleInputChange}
@@ -63,7 +72,7 @@ const AddDetail = () => {
         <h3 className="mb-5 text-xl font-bold text-gray-800">StudentId</h3>
         <input
           type="text"
-          required={true}
+          required="true"
           name="studentId"
           value={data.studentId}
           onChange={handleInputChange}
@@ -72,7 +81,7 @@ const AddDetail = () => {
         <h3 className="mb-5 text-xl font-bold text-gray-800">StudentEmail</h3>
         <input
           type="email"
-          required={true}
+          required="true"
           name="studentEmail"
           value={data.studentEmail}
           onChange={handleInputChange}
@@ -83,7 +92,7 @@ const AddDetail = () => {
         </h3>
         <input
           type="password"
-          required={true}
+          required="true"
           name="studentPassword"
           value={data.studentPassword}
           onChange={handleInputChange}
