@@ -4,7 +4,7 @@ const {
   Register,
   Students,
   updateStudents,
-    DeleteStudent,
+  DeleteStudent,
 } = require("../controllers/studentControllers");
 
 router.route("/newStudent").post(Register);

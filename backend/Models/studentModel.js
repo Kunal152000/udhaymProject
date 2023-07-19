@@ -14,11 +14,11 @@ StudentRegister.pre("save", async function (next) {
   }
   // create the salt for the password and hash it
   const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
+  this.password = await bcrypt.hash(this.studentPassword, salt);
 });
 
 // comapre the entered password with the hashed password
 StudentRegister.methods.matchPassword = async function (enteredPassword) {
-  return await bcrypt.compare(enteredPassword, this.password);
+  return await bcrypt.compare(enteredPassword, this.studentPassword);
 };
 module.exports = mongoose.model("RegisteredStudent", StudentRegister);

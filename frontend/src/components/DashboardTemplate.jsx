@@ -12,7 +12,7 @@ const DashboardTemplate = (props) => {
       <div className="flex-[0.82] sticky left-[28%] min-w-0 ">
         <div className="sticky top-0 pt-[25px] left-[18%] bg-gray-600 h-[10vh] z-[21] text-white">
           <div className="ml-[1350px] ">
-            <a href="/studentLogin" className="text-white">
+            <a href="/studentLogin"  className="text-white">
               For student Login
             </a>
           </div>
